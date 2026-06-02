@@ -74,7 +74,8 @@ The horizontal layout visualizes the factor loadings across all assets. The unif
 ### Getting Started:
 1. Clone the project depository:
    ```bash
-   git clone [https://github.com/yourusername/vn30-pca-quantitative-analysis.git](https://github.com/yourusername/vn30-pca-quantitative-analysis.git)
+   git clone [https://github.com/viet-anh-125/vn30-pca-quantitative-analysis.git]
+   ```
 2. Set up dependencies:
 pip install -r requirements.txt
 3. Run the complete analytical pipeline via Jupyter Notebook:
