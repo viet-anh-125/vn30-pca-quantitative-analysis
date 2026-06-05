@@ -83,15 +83,31 @@ dominates VN30 volatility, consistent with their heavy index weighting.
 - Converted prices to **daily log-returns** for stationarity
 
 ### 2. Z-Score Normalization
-Standardize each stock to mean=0, std=1:
-X_scaled = (X - mean) / std
-When computed on Z-score normalized data, the covariance matrix is
-mathematically equivalent to the **correlation matrix** — enabling pure
-structural comparison across stocks.
 
-### 3. Covariance Matrix
-Cov = (X_scaled.T @ X_scaled) / (n - 1)
-Shape: (30, 30)
+To ensure pure structural comparison across assets without scale bias, each stock's return series is standardized to have a mean of $0$ and a standard deviation of $1$:
+
+$$\mathbf{X}_{scaled} = \frac{\mathbf{X} - \mu}{\sigma}$$
+
+Where:
+* $\mathbf{X}$ represents the raw daily log-returns.
+* $\mu$ is the empirical mean of the returns.
+* $\sigma$ is the empirical standard deviation.
+
+>  **Mathematical Insight:** When Principal Component Analysis (PCA) is performed on Z-score normalized data, the calculated **covariance matrix** becomes mathematically equivalent to the **correlation matrix** of the original data. This eliminates the distortion caused by differing stock price magnitudes or individual volatilities.
+
+---
+
+### 3. Covariance Matrix Computation
+
+The systemic interactions and co-movements between the 30 constituent stocks are captured by computing the sample covariance matrix $\mathbf{\Sigma}$ from the standardized features:
+
+$$\mathbf{\Sigma} = \frac{\mathbf{X}_{scaled}^{T} \cdot \mathbf{X}_{scaled}}{n - 1}$$
+
+Where:
+* $\mathbf{X}_{scaled}^{T}$ is the transposed standardized data matrix of shape $(30 \times 248)$.
+* $\mathbf{X}_{scaled}$ is the standardized data matrix of shape $(248 \times 30)$.
+* $n$ represents the total number of trading days ($248$).
+* **Output Matrix Dimension ($\mathbf{\Sigma}$):** $(30 \times 30)$ symmetrical matrix representing the variance-covariance structures.
 
 ### 4. Eigendecomposition — Two Methods
 
@@ -121,16 +137,41 @@ Both methods produce **numerically identical results**:
 | PC3 | 1.983646 | 1.983646 | 4.44 × 10⁻¹⁶ |
 
 ### 5. Dimensionality Reduction
-Select k=19 components (threshold: 90% cumulative variance):
-X_pca = X_scaled @ W    # W shape: (30, 19)
-Output shape: (248, 19)
-### 6. PC1 Reconstruction & Validation
-PC1_returns = X_scaled @ v1   # v1 = first eigenvector
-Pearson correlation with VN30-Index = 0.9192
+
+To balance data compression and information retention, we selected $k = 19$ principal components based on a cumulative explained variance threshold of $\ge 90\%$.
+
+The mathematical projection of the standardized features onto the reduced principal component space is defined as:
+
+$$\mathbf{X}_{PCA} = \mathbf{X}_{scaled} \cdot \mathbf{W}$$
+
+Where the matrix dimensions are structured as follows:
+* **Input Data ($\mathbf{X}_{scaled}$):** $(248 \times 30)$
+* **Projection Matrix ($\mathbf{W}$):** $(30 \times 19)$ — *comprising the top 19 eigenvectors*
+* **Reduced Output ($\mathbf{X}_{PCA}$):** $(248 \times 19)$
 
 ---
 
-## Project Structure
+### 6. PC1 Reconstruction & Validation
+
+The First Principal Component ($PC1$) capturing the highest variance represents the systematic market factor. The historical returns of $PC1$ are reconstructed by projecting the scaled asset returns onto the first eigenvector:
+
+$$\mathbf{PC1}_{returns} = \mathbf{X}_{scaled} \cdot \mathbf{v}_1$$
+
+Where:
+* $\mathbf{v}_1$ is the first eigenvector (loading vector) of shape $(30 \times 1)$.
+
+#### Validation Result
+* **Pearson Correlation Coefficient ($r$):** The reconstructed $PC1$ returns achieved a strong statistical correlation of **$0.9192$** with the actual $VN30\text{-}Index$ returns:
+  
+  $$\rho_{(\mathbf{PC1}, \mathbf{VN30})} = 0.9192$$
+
+This high correlation statistically validates that the custom PCA model accurately captures the underlying structural movement of the Vietnamese stock market.
+
+---
+
+### Project Structure
+
+```text
 vn30-pca-analysis/
 ├── README.md
 ├── requirements.txt
@@ -138,11 +179,9 @@ vn30-pca-analysis/
 ├── notebook/
 │   └── vn30_pca_analysis.ipynb
 └── assets/
-├── scree_plot.png
-├── pc1_vs_vn30.png
-└── pc1_loadings.png
----
-
+    ├── scree_plot.png
+    ├── pc1_vs_vn30.png
+    └── pc1_loadings.png
 ## Data
 
 Stock CSV files are **not included** in this repo due to size.
