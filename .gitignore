@@ -1,6 +1,12 @@
-.ipynb_checkpoints/
+# Python
 __pycache__/
-*.sys
-*.tmp
-.virtualenv/
-.venv/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (không commit CSV cổ phiếu)
+data/raw/
+*.csv
