@@ -182,8 +182,8 @@ vn30-pca-analysis/
     ├── scree_plot.png
     ├── pc1_vs_vn30.png
     └── pc1_loadings.png
-## Data
 
+### Data
 Stock CSV files are **not included** in this repo due to size.
 
 To reproduce:
