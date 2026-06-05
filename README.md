@@ -1,11 +1,8 @@
-# VN30 Stock Market Structural Analysis via PCA
+# Stock Market Structural Analysis via PCA 
 
-> Final-term quantitative finance project — analyzing the structural dynamics
+> Final-term quantitative finance project - analyzing the structural dynamics
 > of the Vietnamese stock market using a custom-built PCA pipeline implemented
 > from scratch, without relying on any ML libraries.
-
-**Institution:** Banking University of Ho Chi Minh City (HUB)
-**Course:** Data Analysis for Finance
 
 ---
 
@@ -15,8 +12,8 @@ This project applies PCA to the **30 constituent stocks of the VN30 index**
 to decompose market variance, identify systemic risk factors, and quantify
 the dominance of the banking sector over overall index volatility.
 
-The entire PCA algorithm — from covariance matrix construction to
-eigenvalue decomposition — is built manually using NumPy, then validated
+The entire PCA algorithm - from covariance matrix construction to
+eigenvalue decomposition - is built manually using NumPy, then validated
 against standard library outputs.
 
 ---
@@ -65,7 +62,7 @@ against standard library outputs.
 | 9 | SSI | 0.2163 | Securities |
 
 All loadings are **positive** and range narrowly between **0.21–0.24**,
-indicating PC1 captures a uniform, sector-wide co-movement — not any
+indicating PC1 captures a uniform, sector-wide co-movement - not any
 individual stock effect.
 
 **Conclusion:** PC1 = Systemic Market Risk Factor. The banking sector
@@ -76,7 +73,7 @@ dominates VN30 volatility, consistent with their heavy index weighting.
 ## Methodology
 
 ### 1. Data Preprocessing
-- Source: **Investing.com** — daily closing prices for all 30 VN30 stocks
+- Source: **Investing.com** - daily closing prices for all 30 VN30 stocks
 - Date format: `dd/mm/yyyy`, cleaned via `strptime`
 - Merged all tickers on common trading date index
 - Applied **forward-fill** to handle missing sessions (holidays, halts)
@@ -172,12 +169,12 @@ This high correlation statistically validates that the custom PCA model accurate
 ### Project Structure
 
 ```text
-vn30-pca-analysis/
+Stock Market Structural Analysis via PCA/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 ├── notebook/
-│   └── vn30_pca_analysis.ipynb
+│   └── Stock Market Structural Analysis via PCA.ipynb
 └── assets/
     ├── scree_plot.png
     ├── pc1_vs_vn30.png
@@ -202,10 +199,10 @@ To reproduce:
 
 ```bash
 # Or run locally:
-git clone https://github.com/viet-anh-125/vn30-pca-analysis.git
-cd vn30-pca-analysis
+git clone https://github.com/viet-anh-125/Stock Market Structural Analysis via PCA.git
+cd Stock Market Structural Analysis via PCA
 pip install -r requirements.txt
-jupyter notebook notebook/vn30_pca_analysis.ipynb
+jupyter notebook notebook/Stock Market Structural Analysis via PCA.ipynb
 ```
 
 ---
