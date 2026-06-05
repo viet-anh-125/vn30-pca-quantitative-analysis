@@ -180,6 +180,7 @@ Stock Market Structural Analysis via PCA/
     ├── pc1_vs_vn30.png
     └── pc1_loadings.png
 
+
 ### Data
 Stock CSV files are **not included** in this repo due to size.
 
@@ -188,10 +189,9 @@ To reproduce:
 2. Search each VN30 ticker → Historical Data → Download CSV
 3. Place all CSV files in a Google Drive folder named `VN30/`
 4. Update `folder_path` in the notebook to your Drive path
-
 ---
 
-## How to Run
+### How to Run
 
 1. Upload notebook to Google Colab
 2. Mount Google Drive and ensure CSV files are in `/MyDrive/VN30/`
@@ -199,15 +199,15 @@ To reproduce:
 
 ```bash
 # Or run locally:
-git clone https://github.com/viet-anh-125/Stock Market Structural Analysis via PCA.git
-cd Stock Market Structural Analysis via PCA
+git clone https://github.com/viet-anh-125/Stock-Market-Structural-Analysis-via-PCA.git
+cd Stock-Market-Structural-Analysis-via-PCA
 pip install -r requirements.txt
 jupyter notebook notebook/Stock Market Structural Analysis via PCA.ipynb
 ```
 
 ---
 
-## Tech Stack
+### Tech Stack
 
 | Category | Tools |
 |---|---|
@@ -221,6 +221,6 @@ jupyter notebook notebook/Stock Market Structural Analysis via PCA.ipynb
 
 ---
 
-## Author
+### Author
 
 **Đào Việt Anh** 
